@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keyless Car Exercise</title>
+</head>
+<body>
+    <h1>Keyless Car</h1>
+
+    <script>
+        // Step 1: Ask the user for their age using prompt
+        let age = prompt("Please enter your age:");
+
+        // Step 2: Convert the input to a number (prompt returns a string)
+        age = Number(age);
+
+        // Step 3: Check conditions and respond using alert
+        if (age < 18) {
+            alert("Sorry, you are too young to drive this car. Powering off.");
+        } else if (age === 18) {
+            alert("Congratulations on your first year of driving. Enjoy the ride!");
+        } else if (age > 18) {
+            alert("Powering On. Enjoy the ride!");
+        } else {
+            // Optional: handle invalid input like letters or empty input
+            alert("Invalid input. Please enter a valid number for your age.");
+        }
+    </script>
+</body>
+</html>
