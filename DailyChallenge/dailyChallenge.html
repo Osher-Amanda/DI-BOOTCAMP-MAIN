@@ -1,0 +1,158 @@
+<!--Instructions
+In todays exercise we will be creating a Mad Libs game.
+If you’ve never played this game, a mad lib is a game where you 
+fill in a bunch of blank inputs with different word types 
+(ie : noun, adjective, verb), and then a story is generated based 
+on the words you chose, and sometimes the story is surprisingly 
+funny.
+
+In this exercise you work with the HTML code presented below.
+
+Follow these steps :
+
+1.Get the value of each of the inputs in the HTML file when the form
+ is submitted. Remember the event.preventDefault()
+2.Make sure the values are not empty
+*Write a story that uses each of the values.
+*Make sure you check the console for errors when playing the game.
+3. Bonus: Add a “shuffle” button to the HTML file, when clicked the 
+button should change the story currently displayed (but keep the
+values entered by the user). The user could click the button at 
+least three times and get a new story. Display the stories randomly.-->
+
+
+<!DOCTYPE html>
+<!-- Tells the browser this is an HTML5 document -->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!-- Ensures all characters display correctly -->
+  <title>Mad Libs Game</title>
+  <!-- Sets the browser tab title -->
+</head>
+<body>
+  <!-- Everything here is visible on the page -->
+
+  <h1>Mad Libs</h1>
+  <!-- Heading for our game -->
+
+  <!--
+    Step: Create a form (Instruction: "Get the value of each of the inputs in the HTML file")
+    Reason: We need inputs for the user to type words into. 
+  -->
+  <form id="libform">
+    <!-- Each label describes the input field. The "for" links the label to the input -->
+    <label for="noun">Noun:</label>
+    <input type="text" id="noun"><br>
+
+    <label for="adjective">Adjective:</label>
+    <input type="text" id="adjective"><br>
+
+    <label for="person">Someone's Name:</label>
+    <input type="text" id="person"><br>
+
+    <label for="verb">Verb:</label>
+    <input type="text" id="verb"><br>
+
+    <label for="place">A place:</label>
+    <input type="text" id="place"><br><br>
+
+    <!--
+      Step: Add a submit button (Instruction: "Make sure the values are not empty when the form is submitted")
+      Reason: Clicking this button will trigger the JavaScript that generates the story
+    -->
+    <button id="lib-button">Lib it!</button>
+
+    <!--
+      Bonus Step: Add a shuffle button (Instruction: "Add a shuffle button to the HTML file")
+      Reason: This allows generating different story variations without retyping
+    -->
+    <button type="button" id="shuffle-button">Shuffle Story</button>
+  </form>
+
+  <!--
+    Step: Display area for generated story (Instruction: "Write a story that uses each of the values")
+    Reason: JavaScript will insert the completed Mad Libs story here
+  -->
+  <p>Generated story: 
+    <span id="story"></span>
+  </p>
+
+  <!-- JavaScript section -->
+  <script>
+    
+    // Step: Grab elements from the page
+    // Reason: We need to interact with the form, story span, and shuffle button
+ 
+    const form = document.getElementById("libform"); // Our form
+    const storySpan = document.getElementById("story"); // Where the story appears
+    const shuffleButton = document.getElementById("shuffle-button"); // Shuffle button
+
+    // Step: Store user input here (used for generating stories and shuffling)
+    let words = {};
+
+    // Step: Create multiple story templates (Instruction: "Display the stories randomly")
+    // Reason: We can shuffle stories without asking for new input
+    const stories = [
+      (w) => `${w.person} went to ${w.place} with a ${w.adjective} ${w.noun} and decided to ${w.verb}.`,
+      (w) => `In ${w.place}, ${w.person} found a ${w.noun} that was very ${w.adjective}. They tried to ${w.verb} it!`,
+      (w) => `One day, ${w.person} dreamed about a ${w.adjective} ${w.noun} that could ${w.verb} in ${w.place}.`
+    ];
+
+  
+    // Step: Run this when the user clicks "Lib it!" (Instruction: "Get the value of each input when the form is submitted")
+  
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); 
+      // Prevents the form from refreshing the page (important for single-page apps)
+
+ 
+      // Step: Read input values (Instruction: "Make sure the values are not empty")
+      // Reason: We need the words to fill in our story
+  
+      const noun = document.getElementById("noun").value.trim();
+      const adjective = document.getElementById("adjective").value.trim();
+      const person = document.getElementById("person").value.trim();
+      const verb = document.getElementById("verb").value.trim();
+      const place = document.getElementById("place").value.trim();
+
+      // Step: Check if any input is empty
+      if (!noun || !adjective || !person || !verb || !place) {
+        alert("Please fill in all fields!"); 
+        // Stops the function if some fields are empty
+        return;
+      }
+
+      // Step: Save words for future use (Instruction: "Keep the values entered by the user")
+      words = { noun, adjective, person, verb, place };
+
+      // Step: Generate a story using the first template (Instruction: "Write a story that uses each of the values")
+      const storyText = stories[0](words);
+
+      // Step: Display the story on the page
+      storySpan.textContent = storyText;
+    });
+
+    // =========================
+    // Step: Shuffle button functionality (Instruction: "The user could click the button to get a new story")
+    // Reason: Allows showing a different story template without asking the user for new input
+    // =========================
+    shuffleButton.addEventListener("click", function() {
+      if (Object.keys(words).length === 0) {
+        alert("Please generate a story first!"); 
+        // Prevent shuffle if no words were entered yet
+        return;
+      }
+
+      // Pick a random story template
+      const randomIndex = Math.floor(Math.random() * stories.length);
+      const storyText = stories[randomIndex](words);
+
+      // Update the story display
+      storySpan.textContent = storyText;
+    });
+
+  </script>
+
+</body>
+</html>
