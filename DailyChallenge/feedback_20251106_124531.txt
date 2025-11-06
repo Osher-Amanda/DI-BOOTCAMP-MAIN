@@ -1,0 +1,9 @@
+URL: https://github.com/Osher-Amanda/DI-BOOTCAMP-MAIN/blob/main/DailyChallenge/dailyChallenge.html
+suggestions for improvement:
+- The provided code implements a Mad Libs game using HTML and JavaScript, which is entirely unrelated to the chapter content focusing on Python basics, loops, lists, and strings. Therefore, the code does not address the specified learning objectives or challenges.
+Brief justification:
+- correctness: 0% - The code's functionality (a Mad Libs game) is completely outside the scope of the chapter's Python-focused content. It does not demonstrate any understanding or application of Python basics, loops, lists, or strings as outlined in the 'What You'll learn' section and the challenges.
+- readability: N/A
+- performance: N/A
+- security: N/A
+
