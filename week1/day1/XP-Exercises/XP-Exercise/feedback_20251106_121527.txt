@@ -1,0 +1,10 @@
+URL: https://github.com/Osher-Amanda/DI-BOOTCAMP-MAIN/blob/main/week1/day1/XP-Exercises/XP-Exercise/XP-Exercize.py
+suggestions for improvement:
+- The submitted code focuses on string manipulation and user input for string length validation, which is not aligned with the chapter content covering print statements, variables, mathematical operations, comparison operators, if statements, and user input as demonstrated in basic arithmetic and conditional examples.
+- The code does demonstrate user input and some conditional logic, but it is in the context of string length validation, not the fundamental concepts presented in the exercises.
+Brief justification:
+- correctness: The code provided does not address any of the exercises outlined in the chapter content. It is focused on string manipulation, specifically ensuring a user inputs a string of a specific length. The exercises cover basic print statements, variable assignment, arithmetic operations, comparisons, and simple if statements which are absent in the provided code. Therefore, the correctness is 0%.
+- readability: N/A
+- performance: N/A
+- security: N/A
+
