@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Timers and Animation</title>
+    <style>
+        /* ===================== Exercise 1 styles ===================== */
+        /* Paragraphs will have yellow background and red text */
+        p {
+            background: yellow;
+            color: red;
+        }
+
+        /* ===================== Exercise 2 styles ===================== */
+        /* Container for the moving box */
+        #box-container {
+            width: 400px;
+            height: 400px;
+            position: relative; /* important for absolute positioning of the box */
+            background: yellow;
+        }
+
+        /* Box that will move inside the container */
+        #animate {
+            width: 50px;
+            height: 50px;
+            position: absolute; /* allows us to move it by changing left/top */
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== Exercise 1: Timer ===================== -->
+<h2>Exercise 1: Timer</h2>
+
+<!-- Step: Container where paragraphs will be added in JS -->
+<!-- Instruction: Part II & III: Add <p>Hello World</p> here -->
+<!-- Explanation: JS will dynamically add new paragraphs inside this div -->
+<div id="container"></div>
+
+<!-- Step: Button to clear interval -->
+<!-- Instruction: Part III: Clicking this will stop the repeated interval -->
+<!-- Explanation: JS will add an event listener to stop setInterval -->
+<button id="clear">Clear Interval</button>
+
+
+
+
+
+<!-- ===================== Exercise 2: Move the Box ===================== -->
+<h2>Exercise 2: Move the Box</h2>
+
+<!-- Step: Button that triggers movement -->
+<!-- Instruction: Click the button to start moving the box -->
+<!-- Explanation: JS will use setInterval to move the red box -->
+<p><button id="moveButton">Click Me</button></p>
+
+<!-- Step: Container for the animated box -->
+<!-- Instruction: The red box (#animate) moves inside this container -->
+<!-- Explanation: We use relative positioning on container and absolute on box -->
+<div id="box-container">
+    <!-- Step: The red box that will be animated -->
+    <!-- Instruction: Move this box 1px to the right repeatedly -->
+    <div id="animate"></div>
+</div>
+
+<!-- Link to exter

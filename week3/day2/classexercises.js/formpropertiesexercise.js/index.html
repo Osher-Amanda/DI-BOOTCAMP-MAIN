@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Form – Exercise</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; padding: 16px; }
+    pre { background: #f6f6f6; padding: 12px; border-radius: 8px; }
+    .row { margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <h1>Select Form Exercise</h1>
+
+  <div class="row">
+    <!-- We start with 3 options and give each a value (so .value is predictable) -->
+    <label for="education"><strong>Education</strong></label><br />
+    <select id="education">
+      <option value="middleschool">middleschool</option>
+      <option value="university">university</option>
+      <option value="college">College</option>
+    </select>
+    <button id="showChoice">Show Selected</button>
+  </div>
+
+  <!-- This box will show, step-by-step, what our JS did and the results -->
+  <pre id="output">Steps & Results will appear here…</pre>
+
+  <!-- Link to our JavaScript file -->
+  <script src="script.js" defer></script>
+</body>
+</html>
