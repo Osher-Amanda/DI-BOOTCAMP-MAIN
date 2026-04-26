@@ -1,0 +1,27 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<h2>Search</h2>
+
+<form method="POST" action="/search/title">
+  <input name="title" placeholder="Search by title" />
+  <button class="btn btn-primary">Search</button>
+</form>
+
+<br>
+
+<form method="POST" action="/search/category">
+  <select name="category">
+    <option>Science</option>
+    <option>History</option>
+    <option>Animals</option>
+    <option>Space</option>
+  </select>
+  <button class="btn btn-success">Search</button>
+</form>
+
+<hr>
+
+<%- include('../partials/posts', { posts: posts }) %>
+
+<%- include('../partials/footer') %>

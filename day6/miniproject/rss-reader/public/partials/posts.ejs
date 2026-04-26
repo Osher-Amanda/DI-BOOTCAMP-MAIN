@@ -1,0 +1,25 @@
+<div class="container">
+
+  <% posts.forEach(post => { %>
+
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <h5>
+          <a href="<%= post.link %>" target="_blank">
+            <%= post.title %>
+          </a>
+        </h5>
+
+        <p><%= post.pubDate %></p>
+
+        <p>Categories: <%= post.categories?.join(", ") %></p>
+
+        <p><%= post.contentSnippet %></p>
+
+      </div>
+    </div>
+
+  <% }) %>
+
+</div>
