@@ -1,0 +1,2 @@
+Hello from the file!
+This is my Node.js file reading test.

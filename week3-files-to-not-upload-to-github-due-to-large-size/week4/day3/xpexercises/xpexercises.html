@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XP Exercises - Forms and JSON</title>
+</head>
+<body>
+
+ <h2>Exercise 1 - GET Form</h2>
+
+ <!-- 
+  This form uses GET method.
+  When submitted, the data will appear in the URL query string.
+ Example:
+  xpexercises.html?name=John&message=Hello
+ -->
+ <form action="xpexercises.html" method="GET">
+ <input type="text" name="name" placeholder="Enter your name" required>
+<br><br>
+
+ <textarea name="message" placeholder="Write your message" required></textarea>
+ <br><br>
+
+ <input type="submit" value="Send">
+ </form>
+
+
+ <h2>Exercise 2 - POST Form</h2>
+
+ <!-- 
+ This form uses POST method.
+ When submitted, the data does NOT appear in the URL.
+  It appears inside the Network tab of browser developer tools.
+ -->
+ <form action="xpexercises.html" method="POST">
+<input type="text" name="name" placeholder="Enter your name" required>
+ <br><br>
+
+ <textarea name="message" placeholder="Write your message" required></textarea>
+ <br><br>
+
+<input type="submit" value="Send">
+ </form>
+
+ <script src="xpexercises.js"></script>
+
+</body>
+</html>

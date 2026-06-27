@@ -1,0 +1,101 @@
+/* General page styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    cursor: auto; /* normal cursor */
+}
+
+/* Flower-shaped color palette */
+#color-palette {
+    margin-bottom: 20px;
+}
+
+.color {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    margin: 5px;
+    border: 1px solid black;
+
+    /* Flower shape using clip-path */
+    clip-path: polygon(
+        50% 0%, 60% 20%, 80% 20%, 65% 35%,
+        70% 55%, 50% 45%, 30% 55%, 35% 35%,
+        20% 20%, 40% 20%
+    );
+
+    transition: transform 0.2s; /* smooth hover animation */
+}
+
+.color:hover {
+    transform: scale(1.2); /* grow slightly when hovered */
+}
+
+/* Grid container */
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(16, 30px);
+    grid-template-rows: repeat(16, 30px);
+    gap: 1px;
+    justify-content: center;
+}
+
+/* Each square in the grid */
+.square {
+    width: 30px;
+    height: 30px;
+    background-color: white; /* empty square color */
+    border: 1px solid #ccc;
+    display: flex; /* allows centering hearts inside */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Heart shape inside a square */
+.heart {
+    width: 20px;
+    height: 20px;
+    background-color: red; /* dynamic color set by JS */
+    clip-path: polygon(
+        50% 0%, 
+        61% 10%, 
+        75% 10%, 
+        85% 20%, 
+        85% 35%, 
+        50% 70%, 
+        15% 35%, 
+        15% 20%, 
+        25% 10%, 
+        39% 10%
+    );
+}
+
+/* Clear Grid button */
+#clear-btn {
+    margin: 15px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#clear-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Explanation:
+1. The .color class creates flower-shaped color options using clip-path.
+2. #grid-container uses CSS Grid to make 16x16 squares with small gaps.
+3. Each .square is centered with flexbox so hearts appear in the middle.
+4. The .heart class uses clip-path to create a heart shape for coloring.
+5. #clear-btn styles the Clear Grid button.
+*/
+/*Explanation:
+We are using CSS Grid to make a grid of squares.
+repeat(16, 30px) means 16 columns and 16 rows, each 30px.
+.square is each blank square that the user can color.*/

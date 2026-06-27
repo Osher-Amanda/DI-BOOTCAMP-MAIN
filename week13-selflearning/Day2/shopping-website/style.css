@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* NAVBAR */
+
+.navbar {
+  background-color: black;
+  color: white;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  display: inline-block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo i {
+  margin-right: 10px;
+}
+
+.nav-links {
+  float: right;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+.nav-links a:hover {
+  color: orange;
+}
+
+/* HERO */
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero h1 {
+  font-size: 50px;
+}
+
+.hero p {
+  font-size: 22px;
+}
+
+.shop-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 25px;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+}
+
+.shop-btn:hover {
+  background-color: orange;
+}
+
+/* FOOTER */
+
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

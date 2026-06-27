@@ -1,0 +1,8 @@
+{
+  "SocialMedias": ["Facebook", "Instagram", "LinkedIn"],
+  "Skills": ["JS", "React", "Node"],
+  "Experiences": [
+    { "id": 1, "company": "A" },
+    { "id": 2, "company": "B" }
+  ]
+}
