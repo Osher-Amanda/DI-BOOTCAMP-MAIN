@@ -5,49 +5,50 @@ MATRIX_STR = '''7ir
 Tsi
 h%x
 i ?
-sM# 
-$a 
+sM#
+$a
 #t%'''
 
-# --- Step 1: Transforming the String into a 2D List ---
-# We split the big string into a list of rows (lines)
-rows = MATRIX_STR.split('\n')
-# We find out how many rows and columns we have
+# --- Step 1: Transform the string into a 2D list ---
+
+rows = MATRIX_STR.split("\n")
+
+# Number of rows
 num_rows = len(rows)
-num_cols = len(rows[0])
 
-# --- Step 2 & 3: Processing Columns & Filtering Alpha Characters ---
-raw_decoded = ""
+# Find the longest row instead of assuming they're all equal
+num_cols = max(len(row) for row in rows)
 
-# We use a "nested loop": 
-# First we pick a column (0, then 1, then 2...)
+# --- Step 2 & 3: Read the matrix column by column ---
+
+decoded_chars = []
+
 for col in range(num_cols):
-    # Then we go down every row in THAT column
     for row in range(num_rows):
-        # We grab the character at that specific spot
-        char = rows[row][col]
-        # We add every single character to a long string in order
-        raw_decoded += char
 
-# --- Step 4 & 5: Replacing Symbols and Printing ---
-# This part is a bit tricky: we need to find symbols 
-# that are trapped BETWEEN letters and turn them into a single space.
+        # Only access the character if this row is long enough
+        if col < len(rows[row]):
+            decoded_chars.append(rows[row][col])
 
-# I used a "Regular Expression" (re). 
-# This specific pattern looks for non-letter characters ([^a-zA-Z]+) 
-# that have letters on both sides.
-import re
+# Convert list into a string
+raw_decoded = "".join(decoded_chars)
 
-# This finds any group of symbols located between letters and replaces them with one space
-# [a-zA-Z] means a letter, [^a-zA-Z]+ means one or more symbols
-final_message = re.sub(r'(?<=[a-zA-Z])[^a-zA-Z]+(?=[a-zA-Z])', ' ', raw_decoded)
+# --- Step 4: Replace symbols between letters with a space ---
 
-# I also want to clean up any leftover symbols at the very start or end
-# so thatthe message looks nice and pretty.
-# (This step isn't strictly in the instructions but makes the output readable!)
-clean_message = ""
+final_message = re.sub(
+    r'(?<=[A-Za-z])[^A-Za-z]+(?=[A-Za-z])',
+    ' ',
+    raw_decoded
+)
+
+# --- Step 5: Keep only letters and spaces ---
+
+clean_chars = []
+
 for char in final_message:
     if char.isalpha() or char == " ":
-        clean_message += char
+        clean_chars.append(char)
 
-print("Secret Message:", clean_message.strip())
+clean_message = "".join(clean_chars).strip()
+
+print("Secret Message:", clean_message)
