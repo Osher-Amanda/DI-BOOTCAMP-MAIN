@@ -4,12 +4,18 @@ const emojis = require("./emojis");
 const app = express();
 const PORT = 3000;
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
 
-let currentEmoji = null;
 let score = 0;
+let leaderboard = [];
+let currentEmoji = null;
 
-function generateRound() {
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function generateQuestion() {
   currentEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
   let options = [currentEmoji.name];
@@ -23,54 +29,42 @@ function generateRound() {
     }
   }
 
-  options = options.sort(() => Math.random() - 0.5);
-
-  return { emoji: currentEmoji.emoji, options };
+  return {
+    emoji: currentEmoji.emoji,
+    options: shuffle(options),
+  };
 }
 
-app.get("/", (req, res) => {
-  const round = generateRound();
-
-  res.send(`
-    <h1>Emoji Guessing Game</h1>
-    <h2>Score: ${score}</h2>
-
-    <h1 style="font-size:60px">${round.emoji}</h1>
-
-    <form method="POST" action="/guess">
-      ${round.options
-        .map(
-          (opt) => `
-            <label>
-              <input type="radio" name="guess" value="${opt}" required>
-              ${opt}
-            </label><br>
-          `
-        )
-        .join("")}
-
-      <button type="submit">Submit</button>
-    </form>
-  `);
+app.get("/emoji", (req, res) => {
+  res.json(generateQuestion());
 });
 
 app.post("/guess", (req, res) => {
   const guess = req.body.guess;
 
-  let message = "";
-
-  if (guess === currentEmoji.name) {
-    score++;
-    message = "✅ Correct!";
-  } else {
-    message = `❌ Wrong! It was ${currentEmoji.name}`;
+  if (!guess || typeof guess !== "string") {
+    return res.status(400).json({
+      correct: false,
+      message: "Invalid input",
+    });
   }
 
-  res.send(`
-    <h1>${message}</h1>
-    <h2>Score: ${score}</h2>
-    <a href="/">Next emoji</a>
-  `);
+  const correct = guess === currentEmoji.name;
+
+  if (correct) {
+    score++;
+  }
+
+  leaderboard.push(score);
+  leaderboard.sort((a, b) => b - a);
+  leaderboard = leaderboard.slice(0, 5);
+
+  res.json({
+    correct,
+    score,
+    answer: currentEmoji.name,
+    leaderboard,
+  });
 });
 
 app.listen(PORT, () => {
