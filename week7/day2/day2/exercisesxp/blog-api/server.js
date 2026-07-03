@@ -7,7 +7,6 @@ app.use(express.json());
 
 app.use('/posts', postRoutes);
 
-// error route
 app.use((req, res) => {
   res.status(404).send('Route not found');
 });
