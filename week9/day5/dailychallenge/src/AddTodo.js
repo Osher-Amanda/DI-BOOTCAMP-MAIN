@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addTodo } from "./todoSlice";
+import { selectSelectedCategoryId } from "./selectors";
 
 function AddTodo() {
   const [text, setText] = useState("");
-
   const dispatch = useDispatch();
+  const selectedCategoryId = useSelector(selectSelectedCategoryId);
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     if (text.trim() === "") {
       return;
     }
 
-    dispatch(addTodo(text));
+    dispatch(addTodo({ text, categoryId: selectedCategoryId }));
 
     setText("");
-  };
+  }, [dispatch, text, selectedCategoryId]);
 
   return (
     <div>

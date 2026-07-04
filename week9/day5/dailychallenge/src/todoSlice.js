@@ -11,11 +11,22 @@ const todoSlice = createSlice({
 
   reducers: {
     addTodo: (state, action) => {
+      const { text, categoryId } = action.payload;
       state.todos.push({
         id: Date.now(),
-        text: action.payload,
+        text,
+        categoryId,
         completed: false,
+        progress: 0,
       });
+    },
+
+    editTodo: (state, action) => {
+      const { id, text } = action.payload;
+      const todo = state.todos.find((todo) => todo.id === id);
+      if (todo) {
+        todo.text = text;
+      }
     },
 
     toggleTodo: (state, action) => {
@@ -25,6 +36,16 @@ const todoSlice = createSlice({
 
       if (todo) {
         todo.completed = !todo.completed;
+        todo.progress = todo.completed ? 100 : todo.progress;
+      }
+    },
+
+    updateTodoProgress: (state, action) => {
+      const { id, progress } = action.payload;
+      const todo = state.todos.find((todo) => todo.id === id);
+      if (todo) {
+        todo.progress = progress;
+        todo.completed = progress >= 100;
       }
     },
 
@@ -38,7 +59,9 @@ const todoSlice = createSlice({
 
 export const {
   addTodo,
+  editTodo,
   toggleTodo,
+  updateTodoProgress,
   removeTodo,
 } = todoSlice.actions;
 
