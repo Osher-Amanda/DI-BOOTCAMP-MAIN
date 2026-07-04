@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import Car from './components/Car';
+import Events from './components/Events';
+import Phone from './components/Phone';
+import Color from './components/Color';
+import './App.css';
+
+const carInfo = { name: "Ford", model: "Mustang" };
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Exercise 1: Car and Garage</h1>
+      <Car carInfo={carInfo} />
+
+      <h1>Exercise 2: Events</h1>
+      <Events />
+
+      <h1>Exercise 3: Phone</h1>
+      <Phone />
+
+      <h1>Exercise 4: useEffect Hook</h1>
+      <Color />
     </div>
   );
 }
