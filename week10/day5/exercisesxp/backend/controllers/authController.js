@@ -41,10 +41,10 @@ const register = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-  res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production"
-});
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production"
+    });
 
     return res.status(201).json({
       accessToken,
@@ -57,7 +57,7 @@ const register = async (req, res) => {
 
   } catch (err) {
     console.error("REGISTER ERROR:", err);
-    return res.status(500).json({ message: err.message || "Server error" });
+    return res.status(500).json({ message: "Something went wrong during registration" });
   }
 };
 
@@ -100,9 +100,9 @@ const login = async (req, res) => {
     );
 
     res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production"
-});
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production"
+    });
 
     return res.json({
       accessToken,
@@ -115,11 +115,45 @@ const login = async (req, res) => {
 
   } catch (err) {
     console.error("LOGIN ERROR:", err);
-    return res.status(500).json({ message: err.message || "Server error" });
+    return res.status(500).json({ message: "Something went wrong during login" });
   }
+};
+
+// ================= REFRESH TOKEN =================
+const refreshAccessToken = (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.sendStatus(403);
+  }
+
+  jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+
+    const newAccessToken = jwt.sign(
+      { userId: decoded.userId },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    res.json({ accessToken: newAccessToken });
+  });
+};
+
+// ================= LOGOUT =================
+const logout = (req, res) => {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production"
+  });
+  return res.status(200).json({ message: "Logged out successfully" });
 };
 
 module.exports = {
   register,
-  login
+  login,
+  refreshAccessToken,
+  logout
 };

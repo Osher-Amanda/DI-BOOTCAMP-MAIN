@@ -1,55 +1,49 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../features/authSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../app/store";
+import { fetchStories } from "../features/storiesSlice";
 
-function SignupPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+function HomePage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { stories, loading, error } = useSelector((state: RootState) => state.stories);
+  const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  const handleSignup = async () => {
-    setError("");
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ username, email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Signup failed");
-        return;
-      }
-
-      dispatch(setCredentials({ token: data.accessToken, user: data.user }));
-      navigate("/");
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchStories());
     }
-  };
+  }, [dispatch, token]);
+
+  if (!token) {
+    return (
+      <div className="p-6 max-w-md mx-auto text-center">
+        <h1 className="text-2xl font-bold mb-2">Welcome</h1>
+        <p>Please log in to view stories.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>Signup Page</h1>
+    <div className="p-6 max-w-2xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Stories</h1>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading && <p>Loading stories...</p>}
+      {error && <p className="text-red-500 mb-2">{error}</p>}
 
-      <input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
-      <input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
-
-      <button onClick={handleSignup}>Signup</button>
+      <ul className="space-y-4">
+        {stories.map((story) => (
+          <li key={story.id} className="card bg-base-200 p-4">
+            <h3 className="text-lg font-semibold">{story.title}</h3>
+            <p>{story.content}</p>
+            {user && story.author_id === user.id && (
+              <span className="badge badge-secondary mt-2">Your story</span>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default SignupPage;
+export default HomePage;

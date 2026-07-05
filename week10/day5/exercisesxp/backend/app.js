@@ -22,6 +22,8 @@ app.use(cookieParser());
 
 app.use("/auth", authRoutes);
 app.use("/stories", storyRoutes);
+const contributorRoutes = require("./routes/contributorRoutes");
+app.use("/contributors", contributorRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server running");

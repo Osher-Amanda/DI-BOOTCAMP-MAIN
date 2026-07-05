@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { apiFetch } from "../api/apiClient";
 
 interface Story {
   id: number;
@@ -24,13 +25,9 @@ const initialState: StoriesState = {
 
 export const fetchStories = createAsyncThunk(
   "stories/fetchStories",
-  async (token: string, { rejectWithValue }) => {
+  async (_: void, { rejectWithValue }) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/stories`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await apiFetch("/stories");
 
       if (!res.ok) {
         const data = await res.json();

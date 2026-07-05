@@ -10,9 +10,10 @@ function HomePage() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchStories(token));
-    }
+   if (token) {
+  dispatch(fetchStories());
+}
+
   }, [dispatch, token]);
 
   if (!token) {

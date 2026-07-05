@@ -1,61 +1,22 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../features/authSlice";
+return (
+  <div className="p-6 max-w-md mx-auto">
+    <h1 className="text-2xl font-bold mb-4">Login Page</h1>
 
-function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    {error && <p className="text-red-500 mb-2">{error}</p>}
 
-  const handleLogin = async () => {
-    setError("");
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+    <input
+      className="input input-bordered w-full mb-2"
+      placeholder="email"
+      onChange={(e) => setEmail(e.target.value)}
+    />
 
-      const data = await res.json();
+    <input
+      className="input input-bordered w-full mb-4"
+      placeholder="password"
+      type="password"
+      onChange={(e) => setPassword(e.target.value)}
+    />
 
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        return;
-      }
-
-      dispatch(setCredentials({ token: data.accessToken, user: data.user }));
-      navigate("/");
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    }
-  };
-
-  return (
-    <div>
-      <h1>Login Page</h1>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <input
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <input
-        placeholder="password"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button onClick={handleLogin}>Login</button>
-    </div>
-  );
-}
-
-export default LoginPage;
+    <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+  </div>
+);
