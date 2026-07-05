@@ -1,34 +1,47 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../app/store";
+import { fetchStories } from "../features/storiesSlice";
 
-function SignupPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function HomePage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { stories, loading, error } = useSelector((state: RootState) => state.stories);
+  const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  const handleSignup = async () => {
-    const res = await fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchStories(token));
+    }
+  }, [dispatch, token]);
 
-    const data = await res.json();
-    console.log(data);
-  };
+  if (!token) {
+    return (
+      <div>
+        <h1>Welcome</h1>
+        <p>Please log in to view stories.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1>Signup Page</h1>
+      <h1>Stories</h1>
 
-      <input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
-      <input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
+      {loading && <p>Loading stories...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <button onClick={handleSignup}>Signup</button>
+      <ul>
+        {stories.map((story) => (
+          <li key={story.id}>
+            <h3>{story.title}</h3>
+            <p>{story.content}</p>
+            {user && story.author_id === user.id && <span> (Your story)</span>}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default SignupPage;
+export default HomePage;

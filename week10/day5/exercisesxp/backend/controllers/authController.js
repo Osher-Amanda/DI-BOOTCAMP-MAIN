@@ -41,10 +41,10 @@ const register = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false
-    });
+  res.cookie("refreshToken", refreshToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production"
+});
 
     return res.status(201).json({
       accessToken,
@@ -100,9 +100,9 @@ const login = async (req, res) => {
     );
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false
-    });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production"
+});
 
     return res.json({
       accessToken,

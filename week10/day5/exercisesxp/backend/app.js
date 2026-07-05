@@ -27,12 +27,6 @@ app.get("/", (req, res) => {
   res.send("Server running");
 });
 
-const storyRoutes = require("./routes/storyRoutes");
-
-app.use(express.json());
-
-app.use("/stories", storyRoutes);
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

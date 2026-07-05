@@ -1,27 +1,18 @@
-const jwt = require("jsonwebtoken");
+const express = require("express");
+const router = express.Router();
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+const authenticateToken = require("../middleware/authMiddleware");
 
-  if (!authHeader) {
-    return res.sendStatus(403);
-  }
+const {
+  createStory,
+  getStories,
+  updateStory,
+  deleteStory
+} = require("../controllers/storyController");
 
-  const token = authHeader.split(" ")[1];
+router.get("/", authenticateToken, getStories);
+router.post("/", authenticateToken, createStory);
+router.patch("/:id", authenticateToken, updateStory);
+router.delete("/:id", authenticateToken, deleteStory);
 
-  jwt.verify(
-    token,
-    process.env.JWT_SECRET,
-    (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-
-      req.user = user;
-
-      next();
-    }
-  );
-};
-
-module.exports = authenticateToken;
+module.exports = router;

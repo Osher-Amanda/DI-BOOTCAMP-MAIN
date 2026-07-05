@@ -9,3 +9,6 @@ export const store = configureStore({
     stories: storiesReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
